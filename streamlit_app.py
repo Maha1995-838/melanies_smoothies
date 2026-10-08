@@ -60,12 +60,16 @@ if ingredients_list:
 import requests
 
 smoothiefroot_response = requests.get(
-    "https://my.smoothiefroot.com/api/fruit/watermelon"
+    "https://my.smoothiefroot.com/api/fruit/watermelon",
+    timeout=20
 )
 
-#st.text(smoothiefroot_response.json())
-sf_df = st.dataframe(data=smoothiefroot_response.json(), use_container_width=True)
-
+st.write("Status:", smoothiefroot_response.status_code)
+st.write(
+    "Content type:",
+    smoothiefroot_response.headers.get("content-type")
+)
+st.code(smoothiefroot_response.text)
 
 
 
