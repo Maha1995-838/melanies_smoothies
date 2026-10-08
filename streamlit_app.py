@@ -61,16 +61,26 @@ import requests
 
 smoothiefroot_response = requests.get(
     "https://my.smoothiefroot.com/api/fruit/watermelon",
-    timeout=20
+    timeout=30
 )
 
-st.write("Status:", smoothiefroot_response.status_code)
-st.write(
-    "Content type:",
-    smoothiefroot_response.headers.get("content-type")
-)
-st.code(smoothiefroot_response.text)
+if smoothiefroot_response.status_code == 200:
+    try:
+        fruit_data = smoothiefroot_response.json()
 
+        sf_df = st.dataframe(
+            data=fruit_data,
+            use_container_width=True
+        )
+
+    except requests.exceptions.JSONDecodeError:
+        st.error("The SmoothieFroot API did not return valid JSON.")
+
+else:
+    st.warning(
+        "The SmoothieFroot API is temporarily unavailable. "
+        f"Status code: {smoothiefroot_response.status_code}"
+    )
 
 
 
