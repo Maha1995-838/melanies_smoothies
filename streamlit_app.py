@@ -57,30 +57,9 @@ if ingredients_list:
         session.sql(my_insert_stmt).collect()
         st.success('Your Smoothie is ordered,' + ' ' + name_on_order + '!', icon="✅")
 
-import requests
-
-smoothiefroot_response = requests.get(
-    "https://my.smoothiefroot.com/api/fruit/watermelon",
-    timeout=30
-)
-
-if smoothiefroot_response.status_code == 200:
-    try:
-        fruit_data = smoothiefroot_response.json()
-
-        sf_df = st.dataframe(
-            data=fruit_data,
-            use_container_width=True
-        )
-
-    except requests.exceptions.JSONDecodeError:
-        st.error("The SmoothieFroot API did not return valid JSON.")
-
-else:
-    st.warning(
-        "The SmoothieFroot API is temporarily unavailable. "
-        f"Status code: {smoothiefroot_response.status_code}"
-    )
+import requests  
+smoothiefroot_response = requests.get("[https://my.smoothiefroot.com/api/fruit/watermelon](https://my.smoothiefroot.com/api/fruit/watermelon)")  
+st.text(smoothiefroot_response)
 
 
 
